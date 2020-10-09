@@ -134,4 +134,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\EMGU.CV.4.1.1.3497\build\EMGU.CV.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EMGU.CV.4.1.1.3497\build\EMGU.CV.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(SolutionDir)\AllDLLs-x64" "$(TargetDir)"
+if not exist "$(TargetDir)\x64" mkdir "$(TargetDir)\x64"
+copy /Y "$(SolutionDir)\AllDLLs-x64\x64" "$(TargetDir)\x64"
+if not exist "$(TargetDir)\Calibrations" mkdir "$(TargetDir)\Calibrations"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
