@@ -48,6 +48,7 @@
             // BMButton
             // 
             this.BMButton.AutoSize = true;
+            this.BMButton.Checked = true;
             this.BMButton.Location = new System.Drawing.Point(354, 33);
             this.BMButton.Name = "BMButton";
             this.BMButton.Size = new System.Drawing.Size(67, 17);
@@ -63,7 +64,6 @@
             this.ArmsButton.Name = "ArmsButton";
             this.ArmsButton.Size = new System.Drawing.Size(71, 17);
             this.ArmsButton.TabIndex = 2;
-            this.ArmsButton.TabStop = true;
             this.ArmsButton.Text = "Arms War";
             this.ArmsButton.UseVisualStyleBackColor = true;
             // 
@@ -74,7 +74,6 @@
             this.ProtButton.Name = "ProtButton";
             this.ProtButton.Size = new System.Drawing.Size(67, 17);
             this.ProtButton.TabIndex = 3;
-            this.ProtButton.TabStop = true;
             this.ProtButton.Text = "Prot War";
             this.ProtButton.UseVisualStyleBackColor = true;
             // 
@@ -85,7 +84,6 @@
             this.SurvivalButton.Name = "SurvivalButton";
             this.SurvivalButton.Size = new System.Drawing.Size(89, 17);
             this.SurvivalButton.TabIndex = 4;
-            this.SurvivalButton.TabStop = true;
             this.SurvivalButton.Text = "Survival Hunt";
             this.SurvivalButton.UseVisualStyleBackColor = true;
             // 

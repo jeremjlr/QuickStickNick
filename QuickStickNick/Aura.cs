@@ -1,18 +1,15 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace QuickStickNick
 {
+    #region Classes and auras enums
+    /// <summary>
+    /// All the available classes
+    /// </summary>
     public enum Classes
     {
         BM,
@@ -20,6 +17,10 @@ namespace QuickStickNick
         Arms,
         Prot
     }
+
+    /// <summary>
+    /// List of the monitored auras, used as an ID for each aura
+    /// </summary>
     public enum AuraNames
     {
         //Bm
@@ -56,21 +57,29 @@ namespace QuickStickNick
         SweepingStrikes,
         NotVictoryRushArms
     }
+    #endregion
     public class Aura
     {
         #region CONST
         //Path where all the calibrated pictures (image of the auras when it's present) will be stored
-        private string CALIBRATION_PATH = "Calibrations/";
+        private const string CALIBRATION_PATH = "Calibrations/";
         #endregion
 
-        //Current image of what is at the auras position
+        #region Private attributes
+        //Current image of what is at the aura's position
         private Image<Bgr, byte> aura;
         //Aura position on the screen
         private int xPos;
         private int yPos;
         private int width;
         private int height;
+        #endregion
+
         #region Public attributes
+
+        /// <summary>
+        /// Name and ID of the aura
+        /// </summary>
         public AuraNames Name
         {
             get;
@@ -93,6 +102,8 @@ namespace QuickStickNick
             private set;
         }
         #endregion
+
+        #region Constructor and public methods
         public Aura(AuraNames name, Classes gameClass, int xPos, int yPos, int width, int height)
         {
             Name = name;
@@ -120,7 +131,9 @@ namespace QuickStickNick
             //Gets the aura on the screen and compares it to the one stored during calibration
             Present = IsSimilar(aura, GetAura());
         }
+        #endregion
 
+        #region Private methods
         /// <summary>
         /// Returns true if both images are similar.
         /// </summary>
@@ -164,6 +177,6 @@ namespace QuickStickNick
 
             return new Image<Bgr, byte>(aura);
         }
-
+        #endregion
     }
 }

@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -13,6 +7,7 @@ using Gma.System.MouseKeyHook;
 namespace QuickStickNick
 {
     #region Keyboard and mouse hexa
+    //Used for the P/Invoke function keybd_event
     enum VK : int
     {
         ///<summary>
@@ -708,7 +703,7 @@ namespace QuickStickNick
     public partial class MainForm : Form
     {
         #region CONST
-        public const string GAMEWINDOW_NAME = "World of Warcraft";
+        private const string GAMEWINDOW_NAME = "World of Warcraft";
         #endregion
 
         #region Private attributes
@@ -768,18 +763,22 @@ namespace QuickStickNick
         {
             if (statusMonitor.GameHasFocus())
             {
+                //Turns on the bot
                 if (e.KeyCode == Keys.F1)
                 {
                     DoWork = true;
                 }
+                //Turns off the bot
                 else if (e.KeyCode == Keys.F2)
                 {
                     DoWork = false;
                 }
+                //To calibrate auras at any time
                 else if (e.KeyCode == Keys.F3)
                 {
                     statusMonitor.Calibrate();
                 }
+                //If the key pressed is different than F1/F2/F3 then it is passed to the current selected class handler
                 else if (BMButton.Checked)
                 {
                     BMKeyPressHandle(sender, e);
@@ -808,6 +807,7 @@ namespace QuickStickNick
         {
             if (e.KeyCode == Keys.D1 && !e.Control && !e.Shift && DoWork)
             {
+                //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
                 if (statusMonitor.GetAurasPresence(AuraNames.BarbedShot))
                 {
@@ -827,6 +827,7 @@ namespace QuickStickNick
             }
             else if (e.KeyCode == Keys.A && DoWork)
             {
+                //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
                 if (statusMonitor.GetAurasPresence(AuraNames.BeastCleave))
                 {
@@ -851,6 +852,7 @@ namespace QuickStickNick
             }
             else if (e.KeyCode == Keys.D2 && !e.Control && !e.Shift && DoWork)
             {
+                //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
                 if (statusMonitor.GetAurasPresence(AuraNames.BarbedShot))
                 {
@@ -880,6 +882,7 @@ namespace QuickStickNick
         {
             if (e.KeyCode == Keys.D1 && !e.Control && !e.Shift && DoWork)
             {
+                //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
                 if (!statusMonitor.GetAurasPresence(AuraNames.NotSerpentStingBomb))
                 {
@@ -925,6 +928,7 @@ namespace QuickStickNick
         {
             if (e.KeyCode == Keys.D1 && !e.Control && !e.Shift && DoWork)
             {
+                //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
                 if (!statusMonitor.GetAurasPresence(AuraNames.NotFreeRevenge))
                 {
@@ -956,6 +960,7 @@ namespace QuickStickNick
             }
             else if (e.KeyCode == Keys.A && !e.Control && !e.Shift && DoWork)
             {
+                //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
                 if (statusMonitor.GetAurasPresence(AuraNames.ThunderClap))
                 {
@@ -996,6 +1001,7 @@ namespace QuickStickNick
         {
             if (e.KeyCode == Keys.D1 && !e.Control && !e.Shift && DoWork)
             {
+                //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
                 if (statusMonitor.GetAurasPresence(AuraNames.Skullsplitter))
                 {
@@ -1041,6 +1047,7 @@ namespace QuickStickNick
             }
             else if (e.KeyCode == Keys.A && !e.Control && !e.Shift && DoWork)
             {
+                //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
                 if (statusMonitor.GetAurasPresence(AuraNames.SweepingStrikes))
                 {

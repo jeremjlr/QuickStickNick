@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
-using Emgu.CV.Structure;
-using Emgu.CV;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Windows.Forms;
-using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace QuickStickNick
 {
@@ -37,7 +28,7 @@ namespace QuickStickNick
         {
             GAME_HWND = game_hWnd;
             this.mainForm = mainForm;
-            //Starts information gathering thread
+            //Starts the information gathering thread
             StatusUpdater.DoWork += StatusUpdate;
             StatusUpdater.RunWorkerAsync();
 
@@ -76,9 +67,13 @@ namespace QuickStickNick
             auras.Add(AuraNames.NotVictoryRushArms, new Aura(AuraNames.NotVictoryRushArms, Classes.Arms, 624, 238, 32, 32));
         }
 
+        /// <summary>
+        /// Calibrates all the auras of the selected class
+        /// </summary>
         public void Calibrate()
         {
-            Classes focus = Classes.BM;
+            //Default is BM
+            Classes focus;
             if (mainForm.BMButton.Checked)
             {
                 focus = Classes.BM;
@@ -91,11 +86,12 @@ namespace QuickStickNick
             {
                 focus = Classes.Prot;
             }
-            else if (mainForm.ArmsButton.Checked)
+            else /*if (mainForm.ArmsButton.Checked)*/
             {
                 focus = Classes.Arms;
             }
 
+            //Calibrates every aura that belongs to the selected class
             foreach (KeyValuePair<AuraNames, Aura> entry in auras)
             {
                 if (entry.Value.GameClass == focus)
@@ -103,34 +99,14 @@ namespace QuickStickNick
                     entry.Value.Calibrate();
                 }
             }
-                /*if (mainForm.BMButton.Checked)
-                {
-
-                    //Kill Command aura
-                    bSAura = GetAura(BS_ICON_XPOS, BS_ICON_YPOS);
-                    bSAura.Save(calibrationPath + "BS.bmp");
-                    //Barbed Shot aura
-                    kCAura = GetAura(KC_ICON_XPOS, KC_ICON_YPOS);
-                    kCAura.Save(calibrationPath + "KC.bmp");
-                    //Beast Cleave aura
-                    bCAura = GetAura(BC_ICON_XPOS, BC_ICON_YPOS);
-                    bCAura.Save(calibrationPath + "BC.bmp");
-                    //Focus aura
-                    focusAura = GetAura(FOCUS_ICON_XPOS, FOCUS_ICON_YPOS);
-                    focusAura.Save(calibrationPath + "FOCUS.bmp");
-                }
-                else if (mainForm.ProtButton.Checked)
-                {
-                    //Avatar aura
-                    avatarAura = GetAura(AVATAR_ICON_XPOS, AVATAR_ICON_YPOS);
-                    avatarAura.Save(calibrationPath + "AVATAR.bmp");
-                    //AvatarUp aura
-                    avatarUpAura = GetAura(AVATARUP_ICON_XPOS, AVATARUP_ICON_YPOS);
-                    avatarUpAura.Save(calibrationPath + "AVATARUP.bmp");
-                }*/
-                aurasCalibrated = true;
+            aurasCalibrated = true;
         }
 
+        /// <summary>
+        /// Returns whether the aura is detected on screen or not
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public bool GetAurasPresence(AuraNames name)
         {
             return auras[name].Present;
@@ -138,16 +114,9 @@ namespace QuickStickNick
 
         public bool GameHasFocus()
         {
-            //Ignored because of a bug with WoW (fuck off Blizzard)
+            //Ignored because of a bug with WoW
             return true;
-            if (GetForegroundWindow() == GAME_HWND)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return GetForegroundWindow() == GAME_HWND;
         }
 
         #endregion
@@ -156,14 +125,14 @@ namespace QuickStickNick
         private BackgroundWorker StatusUpdater = new BackgroundWorker();
         private void StatusUpdate(object sender, DoWorkEventArgs e)
         {
+            //This is the main status update loop it runs
             while (true)
             {
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
-                //If the game has focus and we want to gather information
+                //If the game has focus, the auras are calibrated and the bot is turned on
                 if (GameHasFocus() && aurasCalibrated && mainForm.DoWork)
                 {
-                    Classes focus = Classes.BM;
+                    //Default is BM
+                    Classes focus;
                     if (mainForm.BMButton.Checked)
                     {
                         focus = Classes.BM;
@@ -176,25 +145,22 @@ namespace QuickStickNick
                     {
                         focus = Classes.Prot;
                     }
-                    else if (mainForm.ArmsButton.Checked)
+                    else /*if (mainForm.ArmsButton.Checked)*/
                     {
                         focus = Classes.Arms;
                     }
 
+                    //Updates all the auras of the selected class
                     foreach (KeyValuePair<AuraNames, Aura> entry in auras)
                     {
                         if (entry.Value.GameClass == focus)
                         {
-                            //Task.Factory.StartNew(() =>
-                            //{
-                                entry.Value.Update();
-                            //});
+                            entry.Value.Update();
                         }
                     }
                 }
-                stopwatch.Stop();
-                Console.WriteLine(stopwatch.ElapsedMilliseconds);
-                //Thread.Sleep(15);
+                //To make sure the thread sleeps when we're not gathering information, mainForm.DoWork == false
+                Thread.Sleep(10);
             }
         }
         #endregion
