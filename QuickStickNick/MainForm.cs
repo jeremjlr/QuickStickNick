@@ -703,12 +703,12 @@ namespace QuickStickNick
     public partial class MainForm : Form
     {
         #region CONST
-        private const string GAMEWINDOW_NAME = "World of Warcraft";
+        private const string _GAMEWINDOW_NAME = "World of Warcraft";
         #endregion
 
         #region Private attributes
-        private StatusMonitor statusMonitor;
-        private IKeyboardMouseEvents globalHook;
+        private StatusMonitor _statusMonitor;
+        private IKeyboardMouseEvents _globalHook;
         #endregion
 
         #region Public attributes
@@ -737,21 +737,21 @@ namespace QuickStickNick
         public MainForm()
         {
             InitializeComponent();
-            statusMonitor = new StatusMonitor(FindWindow(null, GAMEWINDOW_NAME), this);
+            _statusMonitor = new StatusMonitor(FindWindow(null, _GAMEWINDOW_NAME), this);
 
             //Global hook init
-            globalHook = Hook.GlobalEvents();
-            globalHook.KeyDown += GlobalHook_KeyDown;
+            _globalHook = Hook.GlobalEvents();
+            _globalHook.KeyDown += GlobalHook_KeyDown;
         }
         #endregion
 
         #region Private methods
         private void startButton_Click(object sender, EventArgs e)
         {
-            System.IntPtr hw = FindWindow(null, GAMEWINDOW_NAME);
+            System.IntPtr hw = FindWindow(null, _GAMEWINDOW_NAME);
             SetForegroundWindow(hw);
             Thread.Sleep(1000);
-            statusMonitor.Calibrate();
+            _statusMonitor.Calibrate();
         }
 
         /// <summary>
@@ -761,7 +761,7 @@ namespace QuickStickNick
         /// <param name="e"></param>
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {
-            if (statusMonitor.GameHasFocus())
+            if (_statusMonitor.GameHasFocus())
             {
                 //Turns on the bot
                 if (e.KeyCode == Keys.F1)
@@ -776,7 +776,7 @@ namespace QuickStickNick
                 //To calibrate auras at any time
                 else if (e.KeyCode == Keys.F3)
                 {
-                    statusMonitor.Calibrate();
+                    _statusMonitor.Calibrate();
                 }
                 //If the key pressed is different than F1/F2/F3 then it is passed to the current selected class handler
                 else if (BMButton.Checked)
@@ -809,12 +809,12 @@ namespace QuickStickNick
             {
                 //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
-                if (statusMonitor.GetAurasPresence(AuraNames.BarbedShot))
+                if (_statusMonitor.GetAurasPresence(AuraNames.BarbedShot))
                 {
                     keybd_event((byte)VK.KEY_3, 0, 0, 0);
                     keybd_event((byte)VK.KEY_3, 0, 0x0002, 0);
                 }
-                else if (statusMonitor.GetAurasPresence(AuraNames.KillCommand))
+                else if (_statusMonitor.GetAurasPresence(AuraNames.KillCommand))
                 {
                     keybd_event((byte)VK.KEY_2, 0, 0, 0);
                     keybd_event((byte)VK.KEY_2, 0, 0x0002, 0);
@@ -829,22 +829,22 @@ namespace QuickStickNick
             {
                 //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
-                if (statusMonitor.GetAurasPresence(AuraNames.BeastCleave))
+                if (_statusMonitor.GetAurasPresence(AuraNames.BeastCleave))
                 {
                     keybd_event((byte)VK.KEY_A, 0, 0, 0);
                     keybd_event((byte)VK.KEY_A, 0, 0x0002, 0);
                 }
-                else if (statusMonitor.GetAurasPresence(AuraNames.BarbedShot))
+                else if (_statusMonitor.GetAurasPresence(AuraNames.BarbedShot))
                 {
                     keybd_event((byte)VK.KEY_3, 0, 0, 0);
                     keybd_event((byte)VK.KEY_3, 0, 0x0002, 0);
                 }
-                else if (!statusMonitor.GetAurasPresence(AuraNames.BeastCleave3))
+                else if (!_statusMonitor.GetAurasPresence(AuraNames.BeastCleave3))
                 {
                     keybd_event((byte)VK.KEY_A, 0, 0, 0);
                     keybd_event((byte)VK.KEY_A, 0, 0x0002, 0);
                 }
-                else if (statusMonitor.GetAurasPresence(AuraNames.Focus))
+                else if (_statusMonitor.GetAurasPresence(AuraNames.Focus))
                 {
                     keybd_event((byte)VK.KEY_1, 0, 0, 0);
                     keybd_event((byte)VK.KEY_1, 0, 0x0002, 0);
@@ -854,12 +854,12 @@ namespace QuickStickNick
             {
                 //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
-                if (statusMonitor.GetAurasPresence(AuraNames.BarbedShot))
+                if (_statusMonitor.GetAurasPresence(AuraNames.BarbedShot))
                 {
                     keybd_event((byte)VK.KEY_3, 0, 0, 0);
                     keybd_event((byte)VK.KEY_3, 0, 0x0002, 0);
                 }
-                else if (statusMonitor.GetAurasPresence(AuraNames.KillCommandBurst))
+                else if (_statusMonitor.GetAurasPresence(AuraNames.KillCommandBurst))
                 {
                     keybd_event((byte)VK.KEY_2, 0, 0, 0);
                     keybd_event((byte)VK.KEY_2, 0, 0x0002, 0);
@@ -884,29 +884,29 @@ namespace QuickStickNick
             {
                 //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
-                if (!statusMonitor.GetAurasPresence(AuraNames.NotSerpentStingBomb))
+                if (!_statusMonitor.GetAurasPresence(AuraNames.NotSerpentStingBomb))
                 {
                     keybd_event((byte)VK.KEY_5, 0, 0, 0);
                     keybd_event((byte)VK.KEY_5, 0, 0x0002, 0);
                 }
-                else if (statusMonitor.GetAurasPresence(AuraNames.SerpentSting))
+                else if (_statusMonitor.GetAurasPresence(AuraNames.SerpentSting))
                 {
                     keybd_event((byte)VK.SHIFT, 0, 0, 0);
                     keybd_event((byte)VK.KEY_6, 0, 0, 0);
                     keybd_event((byte)VK.KEY_6, 0, 0x0002, 0);
                     keybd_event((byte)VK.SHIFT, 0, 0x0002, 0);
                 }
-                else if (statusMonitor.GetAurasPresence(AuraNames.Wildfire))
+                else if (_statusMonitor.GetAurasPresence(AuraNames.Wildfire))
                 {
                     keybd_event((byte)VK.KEY_5, 0, 0, 0);
                     keybd_event((byte)VK.KEY_5, 0, 0x0002, 0);
                 }
-                else if (!statusMonitor.GetAurasPresence(AuraNames.NotMongooseBite))
+                else if (!_statusMonitor.GetAurasPresence(AuraNames.NotMongooseBite))
                 {
                     keybd_event((byte)VK.KEY_2, 0, 0, 0);
                     keybd_event((byte)VK.KEY_2, 0, 0x0002, 0);
                 }
-                else if (!statusMonitor.GetAurasPresence(AuraNames.Focus87))
+                else if (!_statusMonitor.GetAurasPresence(AuraNames.Focus87))
                 {
                     keybd_event((byte)VK.KEY_1, 0, 0, 0);
                     keybd_event((byte)VK.KEY_1, 0, 0x0002, 0);
@@ -930,22 +930,22 @@ namespace QuickStickNick
             {
                 //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
-                if (!statusMonitor.GetAurasPresence(AuraNames.NotFreeRevenge))
+                if (!_statusMonitor.GetAurasPresence(AuraNames.NotFreeRevenge))
                 {
                     keybd_event((byte)VK.KEY_4, 0, 0, 0);
                     keybd_event((byte)VK.KEY_4, 0, 0x0002, 0);
                 }
-                else if (statusMonitor.GetAurasPresence(AuraNames.ShieldSlam))
+                else if (_statusMonitor.GetAurasPresence(AuraNames.ShieldSlam))
                 {
                     keybd_event((byte)VK.KEY_2, 0, 0, 0);
                     keybd_event((byte)VK.KEY_2, 0, 0x0002, 0);
                 }
-                else if (statusMonitor.GetAurasPresence(AuraNames.ThunderClap))
+                else if (_statusMonitor.GetAurasPresence(AuraNames.ThunderClap))
                 {
                     keybd_event((byte)VK.KEY_A, 0, 0, 0);
                     keybd_event((byte)VK.KEY_A, 0, 0x0002, 0);
                 }
-                else if (!statusMonitor.GetAurasPresence(AuraNames.NotVictoryRush))
+                else if (!_statusMonitor.GetAurasPresence(AuraNames.NotVictoryRush))
                 {
                     keybd_event((byte)VK.SHIFT, 0, 0, 0);
                     keybd_event((byte)VK.KEY_5, 0, 0, 0);
@@ -962,22 +962,22 @@ namespace QuickStickNick
             {
                 //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
-                if (statusMonitor.GetAurasPresence(AuraNames.ThunderClap))
+                if (_statusMonitor.GetAurasPresence(AuraNames.ThunderClap))
                 {
                     keybd_event((byte)VK.KEY_A, 0, 0, 0);
                     keybd_event((byte)VK.KEY_A, 0, 0x0002, 0);
                 }
-                else if (!statusMonitor.GetAurasPresence(AuraNames.NotFreeRevenge) || !statusMonitor.GetAurasPresence(AuraNames.RageLowerThan40))
+                else if (!_statusMonitor.GetAurasPresence(AuraNames.NotFreeRevenge) || !_statusMonitor.GetAurasPresence(AuraNames.RageLowerThan40))
                 {
                     keybd_event((byte)VK.KEY_4, 0, 0, 0);
                     keybd_event((byte)VK.KEY_4, 0, 0x0002, 0);
                 }
-                else if (statusMonitor.GetAurasPresence(AuraNames.ShieldSlam))
+                else if (_statusMonitor.GetAurasPresence(AuraNames.ShieldSlam))
                 {
                     keybd_event((byte)VK.KEY_2, 0, 0, 0);
                     keybd_event((byte)VK.KEY_2, 0, 0x0002, 0);
                 }
-                else if (!statusMonitor.GetAurasPresence(AuraNames.NotVictoryRush))
+                else if (!_statusMonitor.GetAurasPresence(AuraNames.NotVictoryRush))
                 {
                     keybd_event((byte)VK.SHIFT, 0, 0, 0);
                     keybd_event((byte)VK.KEY_5, 0, 0, 0);
@@ -1003,43 +1003,43 @@ namespace QuickStickNick
             {
                 //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
-                if (statusMonitor.GetAurasPresence(AuraNames.Skullsplitter))
+                if (_statusMonitor.GetAurasPresence(AuraNames.Skullsplitter))
                 {
                     keybd_event((byte)VK.SHIFT, 0, 0, 0);
                     keybd_event((byte)VK.KEY_4, 0, 0, 0);
                     keybd_event((byte)VK.KEY_4, 0, 0x0002, 0);
                     keybd_event((byte)VK.SHIFT, 0, 0x0002, 0);
                 }
-                else if (statusMonitor.GetAurasPresence(AuraNames.Overpower))
+                else if (_statusMonitor.GetAurasPresence(AuraNames.Overpower))
                 {
                     keybd_event((byte)VK.KEY_2, 0, 0, 0);
                     keybd_event((byte)VK.KEY_2, 0, 0x0002, 0);
                 }
-                else if (!statusMonitor.GetAurasPresence(AuraNames.NotExec))
+                else if (!_statusMonitor.GetAurasPresence(AuraNames.NotExec))
                 {
                     keybd_event((byte)VK.KEY_4, 0, 0, 0);
                     keybd_event((byte)VK.KEY_4, 0, 0x0002, 0);
                 }
-                else if (statusMonitor.GetAurasPresence(AuraNames.MortalStrike))
+                else if (_statusMonitor.GetAurasPresence(AuraNames.MortalStrike))
                 {
                     keybd_event((byte)VK.KEY_1, 0, 0, 0);
                     keybd_event((byte)VK.KEY_1, 0, 0x0002, 0);
                 }
-                else if (!statusMonitor.GetAurasPresence(AuraNames.NotInForTheKill))
+                else if (!_statusMonitor.GetAurasPresence(AuraNames.NotInForTheKill))
                 {
                     keybd_event((byte)VK.SHIFT, 0, 0, 0);
                     keybd_event((byte)VK.KEY_6, 0, 0, 0);
                     keybd_event((byte)VK.KEY_6, 0, 0x0002, 0);
                     keybd_event((byte)VK.SHIFT, 0, 0x0002, 0);
                 }
-                else if (!statusMonitor.GetAurasPresence(AuraNames.NotVictoryRushArms))
+                else if (!_statusMonitor.GetAurasPresence(AuraNames.NotVictoryRushArms))
                 {
                     keybd_event((byte)VK.SHIFT, 0, 0, 0);
                     keybd_event((byte)VK.KEY_5, 0, 0, 0);
                     keybd_event((byte)VK.KEY_5, 0, 0x0002, 0);
                     keybd_event((byte)VK.SHIFT, 0, 0x0002, 0);
                 }
-                else if (!statusMonitor.GetAurasPresence(AuraNames.NotWW))
+                else if (!_statusMonitor.GetAurasPresence(AuraNames.NotWW))
                 {
                     keybd_event((byte)VK.KEY_5, 0, 0, 0);
                     keybd_event((byte)VK.KEY_5, 0, 0x0002, 0);
@@ -1049,50 +1049,50 @@ namespace QuickStickNick
             {
                 //Pressed key will be ignored and replaced with the desired key in order to trigger the right action
                 e.SuppressKeyPress = true;
-                if (statusMonitor.GetAurasPresence(AuraNames.SweepingStrikes))
+                if (_statusMonitor.GetAurasPresence(AuraNames.SweepingStrikes))
                 {
                     keybd_event((byte)VK.CONTROL, 0, 0, 0);
                     keybd_event((byte)VK.KEY_5, 0, 0, 0);
                     keybd_event((byte)VK.KEY_5, 0, 0x0002, 0);
                     keybd_event((byte)VK.CONTROL, 0, 0x0002, 0);
                 }
-                else if (statusMonitor.GetAurasPresence(AuraNames.Skullsplitter))
+                else if (_statusMonitor.GetAurasPresence(AuraNames.Skullsplitter))
                 {
                     keybd_event((byte)VK.SHIFT, 0, 0, 0);
                     keybd_event((byte)VK.KEY_4, 0, 0, 0);
                     keybd_event((byte)VK.KEY_4, 0, 0x0002, 0);
                     keybd_event((byte)VK.SHIFT, 0, 0x0002, 0);
                 }
-                else if (!statusMonitor.GetAurasPresence(AuraNames.NotInForTheKill))
+                else if (!_statusMonitor.GetAurasPresence(AuraNames.NotInForTheKill))
                 {
                     keybd_event((byte)VK.SHIFT, 0, 0, 0);
                     keybd_event((byte)VK.KEY_6, 0, 0, 0);
                     keybd_event((byte)VK.KEY_6, 0, 0x0002, 0);
                     keybd_event((byte)VK.SHIFT, 0, 0x0002, 0);
                 }
-                else if (statusMonitor.GetAurasPresence(AuraNames.Overpower))
+                else if (_statusMonitor.GetAurasPresence(AuraNames.Overpower))
                 {
                     keybd_event((byte)VK.KEY_2, 0, 0, 0);
                     keybd_event((byte)VK.KEY_2, 0, 0x0002, 0);
                 }
-                else if (!statusMonitor.GetAurasPresence(AuraNames.NotExec))
+                else if (!_statusMonitor.GetAurasPresence(AuraNames.NotExec))
                 {
                     keybd_event((byte)VK.KEY_4, 0, 0, 0);
                     keybd_event((byte)VK.KEY_4, 0, 0x0002, 0);
                 }
-                else if (statusMonitor.GetAurasPresence(AuraNames.MortalStrike))
+                else if (_statusMonitor.GetAurasPresence(AuraNames.MortalStrike))
                 {
                     keybd_event((byte)VK.KEY_1, 0, 0, 0);
                     keybd_event((byte)VK.KEY_1, 0, 0x0002, 0);
                 }
-                else if (!statusMonitor.GetAurasPresence(AuraNames.NotVictoryRushArms))
+                else if (!_statusMonitor.GetAurasPresence(AuraNames.NotVictoryRushArms))
                 {
                     keybd_event((byte)VK.SHIFT, 0, 0, 0);
                     keybd_event((byte)VK.KEY_5, 0, 0, 0);
                     keybd_event((byte)VK.KEY_5, 0, 0x0002, 0);
                     keybd_event((byte)VK.SHIFT, 0, 0x0002, 0);
                 }
-                else if (!statusMonitor.GetAurasPresence(AuraNames.NotWW))
+                else if (!_statusMonitor.GetAurasPresence(AuraNames.NotWW))
                 {
                     keybd_event((byte)VK.KEY_5, 0, 0, 0);
                     keybd_event((byte)VK.KEY_5, 0, 0x0002, 0);

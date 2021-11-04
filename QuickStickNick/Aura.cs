@@ -62,17 +62,17 @@ namespace QuickStickNick
     {
         #region CONST
         //Path where all the calibrated pictures (image of the auras when it's present) will be stored
-        private const string CALIBRATION_PATH = "Calibrations/";
+        private const string _CALIBRATION_PATH = "Calibrations/";
         #endregion
 
         #region Private attributes
         //Current image of what is at the aura's position
-        private Image<Bgr, byte> aura;
+        private Image<Bgr, byte> _aura;
         //Aura position on the screen
-        private int xPos;
-        private int yPos;
-        private int width;
-        private int height;
+        private int _xPos;
+        private int _yPos;
+        private int _width;
+        private int _height;
         #endregion
 
         #region Public attributes
@@ -108,10 +108,10 @@ namespace QuickStickNick
         {
             Name = name;
             GameClass = gameClass;
-            this.xPos = xPos;
-            this.yPos = yPos;
-            this.width = width;
-            this.height = height;
+            _xPos = xPos;
+            _yPos = yPos;
+            _width = width;
+            _height = height;
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace QuickStickNick
         /// </summary>
         public void Calibrate()
         {
-            aura = GetAura();
-            aura.Save(CALIBRATION_PATH + Name.ToString() + ".bmp");
+            _aura = GetAura();
+            _aura.Save(_CALIBRATION_PATH + Name.ToString() + ".bmp");
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace QuickStickNick
         public void Update()
         {
             //Gets the aura on the screen and compares it to the one stored during calibration
-            Present = IsSimilar(aura, GetAura());
+            Present = IsSimilar(_aura, GetAura());
         }
         #endregion
 
@@ -162,17 +162,17 @@ namespace QuickStickNick
         private Image<Bgr, byte> GetAura()
         {
             Bitmap aura = new Bitmap(
-                        width,
-                        height,
+                        _width,
+                        _height,
                         PixelFormat.Format32bppArgb);
 
             Graphics g = Graphics.FromImage(aura);
             g.CopyFromScreen(
-                xPos,
-                yPos,
+                _xPos,
+                _yPos,
                 0,
                 0,
-                new Size(width, height),
+                new Size(_width, _height),
                 CopyPixelOperation.SourceCopy);
 
             return new Image<Bgr, byte>(aura);
