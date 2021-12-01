@@ -37,9 +37,9 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(298, 170);
+            this.startButton.Location = new System.Drawing.Point(48, 127);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(194, 103);
+            this.startButton.Size = new System.Drawing.Size(105, 44);
             this.startButton.TabIndex = 0;
             this.startButton.Text = "Start";
             this.startButton.UseVisualStyleBackColor = true;
@@ -49,7 +49,7 @@
             // 
             this.BMButton.AutoSize = true;
             this.BMButton.Checked = true;
-            this.BMButton.Location = new System.Drawing.Point(354, 33);
+            this.BMButton.Location = new System.Drawing.Point(64, 22);
             this.BMButton.Name = "BMButton";
             this.BMButton.Size = new System.Drawing.Size(67, 17);
             this.BMButton.TabIndex = 1;
@@ -60,7 +60,7 @@
             // ArmsButton
             // 
             this.ArmsButton.AutoSize = true;
-            this.ArmsButton.Location = new System.Drawing.Point(354, 81);
+            this.ArmsButton.Location = new System.Drawing.Point(64, 70);
             this.ArmsButton.Name = "ArmsButton";
             this.ArmsButton.Size = new System.Drawing.Size(71, 17);
             this.ArmsButton.TabIndex = 2;
@@ -70,7 +70,7 @@
             // ProtButton
             // 
             this.ProtButton.AutoSize = true;
-            this.ProtButton.Location = new System.Drawing.Point(354, 104);
+            this.ProtButton.Location = new System.Drawing.Point(64, 93);
             this.ProtButton.Name = "ProtButton";
             this.ProtButton.Size = new System.Drawing.Size(67, 17);
             this.ProtButton.TabIndex = 3;
@@ -80,7 +80,7 @@
             // SurvivalButton
             // 
             this.SurvivalButton.AutoSize = true;
-            this.SurvivalButton.Location = new System.Drawing.Point(354, 56);
+            this.SurvivalButton.Location = new System.Drawing.Point(64, 45);
             this.SurvivalButton.Name = "SurvivalButton";
             this.SurvivalButton.Size = new System.Drawing.Size(89, 17);
             this.SurvivalButton.TabIndex = 4;
@@ -91,7 +91,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(211, 194);
             this.Controls.Add(this.SurvivalButton);
             this.Controls.Add(this.ProtButton);
             this.Controls.Add(this.ArmsButton);
